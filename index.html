@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Primera Página Bonita | Sara Villa</title>
+    
+    <style>
+        /* --- 1. Variables CSS para fácil mantenimiento --- */
+        :root {
+            --primary-gradient: linear-gradient(90deg, #ff8a80, #ff4081);
+            --menu-bg: #ff4081;
+            --menu-hover: #ffe0e5;
+            --bg-color: #ffffff;
+            --text-main: #333333;
+            --text-muted: #718096;
+            --heading-color: #2d3748;
+            --footer-bg: #2d3748;
+            --border-color: #cbd5e0;
+            --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        /* --- 2. Reset Moderno --- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased; /* Suaviza la fuente en pantallas de alta resolución */
+        }
+
+        /* --- 3. Encabezado y Navegación --- */
+        header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            /* Hace que el menú se quede pegado arriba al hacer scroll */
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Botón accesible y sin estilos por defecto */
+        .menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            margin-right: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-btn:hover, .menu-btn:focus-visible {
+            transform: scale(1.1);
+            outline: none;
+            color: var(--menu-hover);
+        }
+
+        header h1 {
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Menú oculto animado fluidamente con max-height */
+        .hidden-menu {
+            background-color: var(--menu-bg);
+            text-align: center;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .hidden-menu.show-menu {
+            max-height: 300px; 
+        }
+
+        .hidden-menu ul {
+            list-style: none;
+            padding: 1rem 0;
+        }
+
+        .hidden-menu ul li {
+            margin: 0.5rem 0;
+        }
+
+        .hidden-menu ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s;
+        }
+
+        .hidden-menu ul li a:hover, .hidden-menu ul li a:focus {
+            color: var(--menu-hover);
+        }
+
+        /* --- 4. Contenido Principal y Grid --- */
+        .blog-header {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        .blog-header h2 {
+            font-size: 2rem;
+            color: var(--heading-color);
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 1.5fr 2fr 1.5fr; /* Columnas laterales iguales */
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Tipografía y Multimedia */
+        h2, h3 {
+            color: var(--heading-color);
+            margin-bottom: 0.75rem;
+            line-height: 1.2;
+        }
+
+        h2 { font-size: 1.25rem; }
+        h3 { font-size: 1.1rem; }
+
+        p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            /* Aumenté este margen para que haya más espacio entre los párrafos grises */
+            margin-bottom: 2.5rem; 
+        }
+
+        img {
+            /* ¡Cambio aquí! Para que la foto mida exactamente lo mismo a los lados que el párrafo de abajo */
+            width: 100%; /* Le obligo a que ocupe todo el ancho de su columna siempre */
+            height: auto; /* Dejo que la altura se calcule sola para que no se vea espichada la foto */
+            display: block;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: var(--border-color);
+            margin: 1.5rem 0;
+        }
+
+        /* Tarjeta de autor (Meta Info) */
+        .author-card { margin-top: 1.5rem; }
+        .author-card p { margin-bottom: 0.25rem; }
+        .author-name { color: var(--heading-color); font-weight: 600; }
+
+        .meta-info {
+            display: flex;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .meta-info img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin: 0 10px 0 0;
+            aspect-ratio: 1/1; /* Círculos perfectos siempre */
+        }
+
+        /* --- 5. Pie de página --- */
+        footer {
+            background-color: var(--footer-bg);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 4rem;
+        }
+        
+        footer p {
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 0.5rem;
+        }
+
+        footer .copyright {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* --- 6. Diseño Responsivo --- */
+        @media (max-width: 992px) {
+            .container {
+                /* En Tablets: La columna central pasa a ser de ancho completo arriba, las otras dos abajo */
+                grid-template-columns: 1fr 1fr; 
+            }
+            .center-col {
+                grid-column: 1 / -1; 
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                /* En Celulares: Todo se apila en una sola columna */
+                grid-template-columns: 1fr; 
+                gap: 3rem;
+            }
+            .blog-header h2 { font-size: 1.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+        <h1>Mi Primera Página Bonita</h1>
+    </header>
+
+    <nav id="mobile-menu" class="hidden-menu" aria-hidden="true">
+        <ul>
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Sobre mí</a></li>
+            <li><a href="#">Mis Recuerdos</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <div class="blog-header">
+        <h2>Léelo en nuestro blog</h2>
+    </div>
+
+    <main class="container">
+        
+        <aside class="left-col">
+            <h2>¿Quién soy yo?</h2>
+            <p>Hola, mi nombre es Sara y tengo 20 años. Estudio Comunicación Social y actualmente trabajo ejerciendo lo que estudio, una nueva etapa de la que espero aprender muchísimo. Anteriormente fui conductora del Metro, una experiencia que me enseñó grandes cosas.</p>
+            <p>Me encanta escuchar música, comer helado y probar restaurantes con Daniel, mi novio. Él es muy atento y juntos hemos aprendido que con amor todo mejora. Trato de aplicar ese amor también por mí misma y por lo que hago; ver la vida así me ha cambiado por completo.</p>
+            
+            <hr>
+
+            <img src="image/yo.jpg" alt="Sara Villa en un restaurante" loading="lazy" onerror="this.src='https://via.placeholder.com/300x200?text=Foto+Sara'">
+            <h3>Me gustan mucho las fotos</h3>
+            
+            <div class="author-card">
+                <p class="author-name">Sara Villa</p>
+                <p>sara.villama@amigo.edu.co</p>
+            </div>
+        </aside>
+
+        <article class="center-col">
+            <img src="image/soy.jpg" alt="Sara en el metro" loading="lazy" onerror="this.src='https://via.placeholder.com/600x400?text=Foto+Metro'">
+            <h2>Mis sueños</h2>
+            <p>Mis sueños se enfocan en crecer personal y profesionalmente. Aspiro a ser una excelente comunicadora social, conectando con las personas y generando un impacto real a través de los mensajes.</p>
+            <p>También quiero fortalecer mi desarrollo en el área gráfica. Veo mi futuro en constante aprendizaje, integrando la comunicación y el diseño para crear proyectos visuales, creativos y significativos.</p>
+        </article>
+
+        <aside class="right-col">
+            <h2>Mi familia</h2>
+            <p>Mi familia es el eje de mi vida. Comparto un vínculo muy unido y lleno de apoyo con mis tres hermanos: Jefferson, Salomé y Valery.</p>
+            <p>Mis papás son mi mayor pilar: Ángela, mi mamá, siempre me acompaña con su amor, y mi papá es mi gran ejemplo de esfuerzo. A ellos les debo mis valores.</p>
+            
+            <img src="image/familia.jpg" alt="Las niñas y la familia" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300?text=Foto+Familia'">
+            
+            <div class="meta-info">
+                <img src="image/yo.jpg" alt="Avatar de Sara Villa" loading="lazy" onerror="this.src='https://via.placeholder.com/30?text=S'">
+                <span>Hace 3 días | 5 min de lectura</span>
+            </div>
+        </aside>
+    </main>
+
+    <footer>
+        <p>Hecho con ❤️ por Sara Villa</p>
+        <p class="copyright">© 2026 Mi Primer Página Bonita. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Aseguramos que el HTML cargue antes de ejecutar el script
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('menuBtn');
+            const menu = document.getElementById('mobile-menu');
+
+            menuBtn.addEventListener('click', () => {
+                // Leemos el estado actual
+                const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+                
+                // Actualizamos los atributos para accesibilidad
+                menuBtn.setAttribute('aria-expanded', !isExpanded);
+                menu.setAttribute('aria-hidden', isExpanded);
+                
+                // Mostramos/Ocultamos visualmente
+                menu.classList.toggle('show-menu');
+            });
+        });
+    </script>
+</body>
+</html>
